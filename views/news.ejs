@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>News</title>
+        <%- include('head.ejs') %>
+    </head>
+    <body>
+        <%- include('navbar.ejs') %>
+
+        <div class="container">
+            <div class="fs-2 fw-bold mt-2 mb-4">The Dota 2 News (provided by NewsAPI.org)</div>
+            <select name="language" class="form-select" id="language">
+                <option value="">None</option>
+                <option value="ru">RU</option>
+                <option value="en">EN</option>
+                <option value="de">DE</option>
+                <option value="es">ES</option>
+                <option value="it">IT</option>
+            </select>
+            <div class="mt-5">
+                <% news.forEach((article, index) => { %> <% if(index % 2 === 0) { %>
+                <div class="row mb-4">
+                    <% } %>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <img src="<%= article.urlToImage %>" class="card-img-top" alt="<%= article.title %>" />
+                            <div class="card-body">
+                                <h5 class="card-title"><%= article.title %></h5>
+                                <p class="card-text"><%= article.description %></p>
+                                <a href="<%= article.url %>" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% if(index % 2 !== 0 || index === news.length - 1) { %>
+                </div>
+                <% } %> <% }); %>
+            </div>
+        </div>
+
+        <%- include('footer.ejs') %>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const language = document.getElementById("language");
+                language.addEventListener("change", (e) => {
+                    const value = e.target.value;
+                    if (value) {
+                        window.location.href = `/news?language=${value}`;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

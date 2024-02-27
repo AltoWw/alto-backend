@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Teams List</title>
+        <%- include('head.ejs') %>
+    </head>
+    <body>
+        <%- include('navbar.ejs') %>
+
+        <div class="container mt-5">
+            <div class="fs-2 fw-bold mb-4">Dota 2 Teams in 2024</div>
+            <div class="row">
+                <% teams.forEach(team => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="width: 18rem">
+                        <% if(team.logo_url) { %>
+                        <img src="<%= team.logo_url %>" class="card-img-top" alt="<%= team.name %> logo" />
+                        <% } %>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= team.name %></h5>
+                            <p class="card-text">Tag: <%= team.tag %></p>
+                            <p class="card-text">Rating: <%= team.rating %></p>
+                            <p class="card-text">Wins: <%= team.wins %>, Losses: <%= team.losses %></p>
+                            <p class="card-text">Last match: <%= new Date(team.last_match_time * 1000).toLocaleDateString() %></p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+
+        <%- include('footer.ejs') %>
+    </body>
+</html>

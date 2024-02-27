@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>News</title>
+        <%- include('head.ejs') %>
+    </head>
+    <body>
+        <%- include('navbar.ejs') %>
+
+        <div class="container">
+            <div class="fs-2 fw-bold mt-2 mb-4">Manage Users</div>
+            <div class="mt-4">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Admin?</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach((item) => { %>
+                            <tr>
+                                <td><%= item._id %></td>
+                                <td><%= item.name %></td>
+                                <td><%= item.username %></td>
+                                <td><%= item.email %></td>
+                                <td><%= item.is_admin ? 'Yes' : 'No' %></td>
+                                <td><%= item.created_at.toLocaleDateString() %></td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="/admin/users/delete/<%= item._id %>" type="submit" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="fs-2 fw-bold mt-5 mb-2">Manage Heroes</div>
+            <button class="btn btn-primary py-2 px-5" data-bs-toggle="modal" data-bs-target="#addNewHero">Add New Hero</button>
+            <div class="mt-4">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Название</th>
+                                <th>Description</th>
+                                <th>Описание</th>
+                                <th>Type</th>
+                                <th>Тип</th>
+                                <th>Created</th>
+                                <th>Images</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% heroes.forEach((item) => { %>
+                            <tr>
+                                <td><%= item._id %></td>
+                                <td><%= item.name %></td>
+                                <td><%= item.name_ru %></td>
+                                <td><%= item.description %></td>
+                                <td><%= item.description_ru %></td>
+                                <td><%= item.type %></td>
+                                <td><%= item.type_ru %></td>
+                                <td><%= item.created_at.toLocaleDateString() %></td>
+                                <td>
+                                    <%item.images.forEach((link, index) => { %>
+                                    <a href="<%= link %>">link<%=index%></a>
+                                    <% }); %>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="/admin/heroes/edit/<%= item._id %>" class="btn btn-primary me-2">Edit</a>
+                                        <a href="/admin/heroes/delete/<%= item._id %>" type="submit" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addNewHero" tabindex="-1" aria-labelledby="addNewHeroLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addNewHeroLabel">Add New Hero</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/admin/heroes" method="POST">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" id="name" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="name_ru" class="form-label">Name (RU)</label>
+                                <input type="text" class="form-control" name="name_ru" id="name_ru" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" name="description" id="description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description_ru" class="form-label">Description (RU)</label>
+                                <textarea class="form-control" name="description_ru" id="description_ru"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Type</label>
+                                <input type="text" class="form-control" name="type" id="type" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="type_ru" class="form-label">Type (RU)</label>
+                                <input type="text" class="form-control" name="type_ru" id="type_ru" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="images" class="form-label">Images (URLs)</label>
+                                <input type="text" class="form-control" id="images" name="images" placeholder="URL 1, URL 2, ..." />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('footer.ejs') %>
+    </body>
+</html>

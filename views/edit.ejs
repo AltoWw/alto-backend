@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit <%= hero.name %></title>
+        <%- include('head.ejs') %>
+    </head>
+    <body>
+        <%- include('navbar.ejs') %>
+
+        <div class="container">
+            <div class="fs-2 fw-bold mt-2 mb-4">Edit hero "<%= hero.name %>"</div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><%= hero._id %></h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="/admin/heroes/edit/<%= hero._id %>" method="POST">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" value="<%= hero.name %>" name="name" id="name" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name_ru" class="form-label">Name (RU)</label>
+                                    <input type="text" class="form-control" value="<%= hero.name_ru %>" name="name_ru" id="name_ru" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" name="description" id="description"><%= hero.description %></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description_ru" class="form-label">Description (RU)</label>
+                                    <textarea class="form-control" name="description_ru" id="description_ru"><%= hero.description_ru %></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="type" class="form-label">Type</label>
+                                    <input type="text" class="form-control" name="type" value="<%= hero.type %>" id="type" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="type_ru" class="form-label">Type (RU)</label>
+                                    <input type="text" class="form-control" name="type_ru" value="<%= hero.type_ru %>" id="type_ru" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="images" class="form-label">Images (URLs)</label>
+                                    <input type="text" class="form-control" id="images" value="<%= hero.images.join(`,`) %>" name="images" placeholder="URL 1, URL 2, ..." />
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('footer.ejs') %>
+    </body>
+</html>

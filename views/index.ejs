@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home</title>
+        <%- include('head.ejs') %>
+    </head>
+    <body>
+        <%- include('navbar.ejs') %>
+
+        <div class="container">
+            <div class="fs-2 fw-bold mt-2 mb-4">The best Dota 2 Portal</div>
+            <img src="https://miro.medium.com/v2/resize:fit:1358/0*zndFDCGBmIrwqQxR" class="img-fluid object-fit-contain rounded-3" alt="" />
+        </div>
+
+        <div class="container my-4">
+            <select class="form-select w-50" id="language">
+                <option value="">None</option>
+                <option value="ru">RU</option>
+                <option value="en">EN</option>
+            </select>
+            <br />
+
+            <div class="row">
+                <% heroes.forEach((hero, index) => { %>
+                <!-- Check if a new row is needed -->
+                <% if (index % 2 === 0 && index > 0) { %>
+            </div>
+            <div class="row">
+                <% } %>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div id="carousel<%= hero._id %>" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <% hero.images.forEach((image, idx) => { %>
+                                <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+                                    <img src="<%= image %>" class="d-block w-100" alt="..." />
+                                </div>
+                                <% }) %>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= hero._id %>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= hero._id %>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= language === 'ru' ? hero.name_ru : hero.name %></h5>
+                            <p class="card-text"><%= language === 'ru' ? hero.description_ru : hero.description %></p>
+                            <!-- Additional hero details here -->
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+
+        <%- include('footer.ejs') %>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const language = document.getElementById("language");
+                language.addEventListener("change", (e) => {
+                    const value = e.target.value;
+                    if (value) {
+                        window.location.href = `/?lang=${value}`;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
