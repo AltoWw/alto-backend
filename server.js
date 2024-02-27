@@ -39,9 +39,6 @@ const dotaHeroSchema = new mongoose.Schema({
 
 const DotaHero = mongoose.model("DotaHero", dotaHeroSchema);
 
-User.findOneAndUpdate({ username: "altynbek" }, { is_admin: true }).then((user) => {
-    console.log(user);
-});
 
 app.get("/", async (req, res) => {
     const user = await User.findById(req.session?.userId);
@@ -160,8 +157,8 @@ app.get("/teams", async (req, res) => {
     res.render("teams", { user, isAdmin: user?.is_admin ?? false, teams });
 });
 
-app.listen(5000, "0.0.0.0", () => {
-    console.log("Server is running on port :5000");
+app.listen(3000, "0.0.0.0", () => {
+    console.log("Server is running on port :3000");
 });
 
 // api
